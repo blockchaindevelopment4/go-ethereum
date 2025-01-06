@@ -14,21 +14,21 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with the go-ethereum library. If not, see <http://www.gnu.org/licenses/>.
 
-package ai
+package core
 
 import (
-	"fmt"
-	"os"
-	"net/url"
-	"net/http"
+	"encoding/json"  // Added import for json
+    "log"             // Added import for log
+    "bytes"           // Added import for bytes
+    "io/ioutil"       // Deprecated; replace with io and os if needed
 	"strconv"
+	"os"
+	"net/http"
 
 	"github.com/venusgalstar/go-ethereum/core/types"
-	"github.com/venusgalstar/go-ethereum/core"
-	"github.com/venusgalstar/go-ethereum/common"
 )
 
-func generate(tx *types.Transaction, msg *core.Message) {
+func generateAI(tx *types.Transaction, msg *Message) {
 	
 	server := os.Getenv("AI_SERVER_IP")
 	port := os.Getenv("AI_SERVER_PORT")	
@@ -43,11 +43,11 @@ func generate(tx *types.Transaction, msg *core.Message) {
 	url :=  "https://" + server + ":" + port + "/generate"
 
 	data := map[string]string{
-		"hash": tx.hash.Hex(),
+		"hash": tx.Hash().Hex(),
 		"from": msg.From.Hex(),
 		"to": msg.To.Hex(),
 		"nonce": strconv.FormatUint(msg.Nonce, 10),
-		"value": strconv.FormatUint(msg.Value, 10),
+		"value": strconv.FormatUint(msg.Value.Uint64(), 10),
 		"data": string(msg.Data),
 	}
 
@@ -69,6 +69,6 @@ func generate(tx *types.Transaction, msg *core.Message) {
 	}
 
 	// Print the response
-	fmt.Printf("Response Status: %s\n", resp.Status)
-	fmt.Printf("Response Body: %s\n", string(body))
+	log.Printf("Response Status: %s\n", resp.Status)
+	log.Printf("Response Body: %s\n", string(body))
 }
