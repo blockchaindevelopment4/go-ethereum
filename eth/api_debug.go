@@ -22,17 +22,17 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/ethereum/go-ethereum/common"
-	"github.com/ethereum/go-ethereum/common/hexutil"
-	"github.com/ethereum/go-ethereum/core/rawdb"
-	"github.com/ethereum/go-ethereum/core/state"
-	"github.com/ethereum/go-ethereum/core/types"
-	"github.com/ethereum/go-ethereum/crypto"
-	"github.com/ethereum/go-ethereum/internal/ethapi"
-	"github.com/ethereum/go-ethereum/log"
-	"github.com/ethereum/go-ethereum/rlp"
-	"github.com/ethereum/go-ethereum/rpc"
-	"github.com/ethereum/go-ethereum/trie"
+	"github.com/venusgalstar/go-ethereum/common"
+	"github.com/venusgalstar/go-ethereum/common/hexutil"
+	"github.com/venusgalstar/go-ethereum/core/rawdb"
+	"github.com/venusgalstar/go-ethereum/core/state"
+	"github.com/venusgalstar/go-ethereum/core/types"
+	"github.com/venusgalstar/go-ethereum/crypto"
+	"github.com/venusgalstar/go-ethereum/internal/ethapi"
+	"github.com/venusgalstar/go-ethereum/log"
+	"github.com/venusgalstar/go-ethereum/rlp"
+	"github.com/venusgalstar/go-ethereum/rpc"
+	"github.com/venusgalstar/go-ethereum/trie"
 )
 
 // DebugAPI is the collection of Ethereum full node APIs for debugging the

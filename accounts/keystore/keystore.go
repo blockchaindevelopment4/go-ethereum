@@ -32,11 +32,11 @@ import (
 	"sync"
 	"time"
 
-	"github.com/ethereum/go-ethereum/accounts"
-	"github.com/ethereum/go-ethereum/common"
-	"github.com/ethereum/go-ethereum/core/types"
-	"github.com/ethereum/go-ethereum/crypto"
-	"github.com/ethereum/go-ethereum/event"
+	"github.com/venusgalstar/go-ethereum/accounts"
+	"github.com/venusgalstar/go-ethereum/common"
+	"github.com/venusgalstar/go-ethereum/core/types"
+	"github.com/venusgalstar/go-ethereum/crypto"
+	"github.com/venusgalstar/go-ethereum/event"
 )
 
 var (

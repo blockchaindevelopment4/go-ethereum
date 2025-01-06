@@ -23,7 +23,7 @@ import (
 	"runtime/debug"
 	"strings"
 
-	"github.com/ethereum/go-ethereum/version"
+	"github.com/venusgalstar/go-ethereum/version"
 )
 
 const ourPath = "github.com/ethereum/go-ethereum" // Path to our module

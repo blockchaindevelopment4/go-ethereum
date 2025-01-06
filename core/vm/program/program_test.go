@@ -21,8 +21,8 @@ import (
 	"math/big"
 	"testing"
 
-	"github.com/ethereum/go-ethereum/common"
-	"github.com/ethereum/go-ethereum/core/vm"
+	"github.com/venusgalstar/go-ethereum/common"
+	"github.com/venusgalstar/go-ethereum/core/vm"
 	"github.com/holiman/uint256"
 )
 

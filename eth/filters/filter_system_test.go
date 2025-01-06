@@ -26,17 +26,17 @@ import (
 	"testing"
 	"time"
 
-	"github.com/ethereum/go-ethereum/common"
-	"github.com/ethereum/go-ethereum/consensus/ethash"
-	"github.com/ethereum/go-ethereum/core"
-	"github.com/ethereum/go-ethereum/core/bloombits"
-	"github.com/ethereum/go-ethereum/core/rawdb"
-	"github.com/ethereum/go-ethereum/core/types"
-	"github.com/ethereum/go-ethereum/ethdb"
-	"github.com/ethereum/go-ethereum/event"
-	"github.com/ethereum/go-ethereum/internal/ethapi"
-	"github.com/ethereum/go-ethereum/params"
-	"github.com/ethereum/go-ethereum/rpc"
+	"github.com/venusgalstar/go-ethereum/common"
+	"github.com/venusgalstar/go-ethereum/consensus/ethash"
+	"github.com/venusgalstar/go-ethereum/core"
+	"github.com/venusgalstar/go-ethereum/core/bloombits"
+	"github.com/venusgalstar/go-ethereum/core/rawdb"
+	"github.com/venusgalstar/go-ethereum/core/types"
+	"github.com/venusgalstar/go-ethereum/ethdb"
+	"github.com/venusgalstar/go-ethereum/event"
+	"github.com/venusgalstar/go-ethereum/internal/ethapi"
+	"github.com/venusgalstar/go-ethereum/params"
+	"github.com/venusgalstar/go-ethereum/rpc"
 )
 
 type testBackend struct {

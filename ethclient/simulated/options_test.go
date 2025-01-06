@@ -23,9 +23,9 @@ import (
 	"testing"
 
 	"github.com/ethereum/go-ethereum"
-	"github.com/ethereum/go-ethereum/core"
-	"github.com/ethereum/go-ethereum/core/types"
-	"github.com/ethereum/go-ethereum/params"
+	"github.com/venusgalstar/go-ethereum/core"
+	"github.com/venusgalstar/go-ethereum/core/types"
+	"github.com/venusgalstar/go-ethereum/params"
 )
 
 // Tests that the simulator starts with the initial gas limit in the genesis block,
