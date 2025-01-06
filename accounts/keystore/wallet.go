@@ -19,7 +19,7 @@ package keystore
 import (
 	"math/big"
 
-	"github.com/ethereum/go-ethereum"
+	"github.com/venusgalstar/go-ethereum"
 	"github.com/venusgalstar/go-ethereum/accounts"
 	"github.com/venusgalstar/go-ethereum/core/types"
 	"github.com/venusgalstar/go-ethereum/crypto"

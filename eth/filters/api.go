@@ -25,7 +25,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/ethereum/go-ethereum"
+	"github.com/venusgalstar/go-ethereum"
 	"github.com/venusgalstar/go-ethereum/common"
 	"github.com/venusgalstar/go-ethereum/common/hexutil"
 	"github.com/venusgalstar/go-ethereum/core/types"

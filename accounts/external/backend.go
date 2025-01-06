@@ -22,7 +22,7 @@ import (
 	"math/big"
 	"sync"
 
-	"github.com/ethereum/go-ethereum"
+	"github.com/venusgalstar/go-ethereum"
 	"github.com/venusgalstar/go-ethereum/accounts"
 	"github.com/venusgalstar/go-ethereum/common"
 	"github.com/venusgalstar/go-ethereum/common/hexutil"

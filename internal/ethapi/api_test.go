@@ -36,7 +36,7 @@ import (
 	"github.com/venusgalstar/go-ethereum/accounts/abi"
 	"github.com/venusgalstar/go-ethereum/internal/ethapi/override"
 
-	"github.com/ethereum/go-ethereum"
+	"github.com/venusgalstar/go-ethereum"
 	"github.com/venusgalstar/go-ethereum/accounts"
 	"github.com/venusgalstar/go-ethereum/accounts/keystore"
 	"github.com/venusgalstar/go-ethereum/common"

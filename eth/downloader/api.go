@@ -21,7 +21,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/ethereum/go-ethereum"
+	"github.com/venusgalstar/go-ethereum"
 	"github.com/venusgalstar/go-ethereum/core"
 	"github.com/venusgalstar/go-ethereum/event"
 	"github.com/venusgalstar/go-ethereum/rpc"

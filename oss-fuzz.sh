@@ -81,7 +81,7 @@ function compile_fuzzer() {
 }
 
 go install github.com/holiman/gofuzz-shim@latest
-repo=$GOPATH/src/github.com/ethereum/go-ethereum
+repo=$GOPATH/src/github.com/venusgalstar/go-ethereum
 compile_fuzzer github.com/venusgalstar/go-ethereum/accounts/abi \
   FuzzABI fuzzAbi \
   $repo/accounts/abi/abifuzzer_test.go

@@ -8,7 +8,7 @@ import (
 	"strings"
 	"errors"
 
-	ethereum "github.com/ethereum/go-ethereum"
+	ethereum "github.com/venusgalstar/go-ethereum"
 	"github.com/venusgalstar/go-ethereum/accounts/abi"
 	"github.com/venusgalstar/go-ethereum/accounts/abi/bind"
 	"github.com/venusgalstar/go-ethereum/common"

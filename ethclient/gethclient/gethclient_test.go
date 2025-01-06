@@ -24,7 +24,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/ethereum/go-ethereum"
+	"github.com/venusgalstar/go-ethereum"
 	"github.com/venusgalstar/go-ethereum/common"
 	"github.com/venusgalstar/go-ethereum/consensus/ethash"
 	"github.com/venusgalstar/go-ethereum/core"

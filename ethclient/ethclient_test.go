@@ -26,7 +26,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/ethereum/go-ethereum"
+	"github.com/venusgalstar/go-ethereum"
 	"github.com/venusgalstar/go-ethereum/accounts/abi"
 	"github.com/venusgalstar/go-ethereum/common"
 	"github.com/venusgalstar/go-ethereum/consensus/ethash"
