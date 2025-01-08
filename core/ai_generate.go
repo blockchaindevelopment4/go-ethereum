@@ -72,3 +72,43 @@ func generateAI(tx *types.Transaction, msg *Message) {
 	log.Printf("Response Status: %s\n", resp.Status)
 	log.Printf("Response Body: %s\n", string(body))
 }
+
+func getGenerated(txHash string) (inscription string) {
+	
+	server := os.Getenv("AI_SERVER_IP")
+	port := os.Getenv("AI_SERVER_PORT")	
+
+	if port == "" {
+		port = "3000" // Default value
+	}
+	if server == "" {
+		server = "127.0.0.1"
+	}
+
+	url :=  "https://" + server + ":" + port + "/getGenerated"
+
+	data := map[string]string{
+		"hash": txHash,
+	}
+
+	jsonData, err := json.Marshal(data)
+	if err != nil {
+		log.Fatalf("Error marshaling JSON: %v", err)
+	}
+	
+	resp, err := http.Post(url, "application/json", bytes.NewBuffer(jsonData))
+	if err != nil {
+		log.Fatalf("Error making POST request: %v", err)
+	}
+	defer resp.Body.Close()
+
+	// Read the response body
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		log.Fatalf("Error reading response body: %v", err)
+	}
+
+	// Print the response
+	log.Printf("Response Status: %s\n", resp.Status)
+	return string(body);
+}
