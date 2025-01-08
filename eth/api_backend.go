@@ -317,8 +317,6 @@ func (b *EthAPIBackend) GetTransaction(ctx context.Context, txHash common.Hash) 
 	if lookup == nil || tx == nil {
 		return false, nil, common.Hash{}, 0, 0, nil
 	}
-
-	inscription := core.getGenerated(txHash.Hex())
 	return true, tx, lookup.BlockHash, lookup.BlockIndex, lookup.Index, nil
 }
 

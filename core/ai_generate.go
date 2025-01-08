@@ -28,7 +28,7 @@ import (
 	"github.com/venusgalstar/go-ethereum/core/types"
 )
 
-func generateAI(tx *types.Transaction, msg *Message) {
+func GenerateAI(tx *types.Transaction, msg *Message) {
 	
 	server := os.Getenv("AI_SERVER_IP")
 	port := os.Getenv("AI_SERVER_PORT")	
@@ -73,7 +73,7 @@ func generateAI(tx *types.Transaction, msg *Message) {
 	log.Printf("Response Body: %s\n", string(body))
 }
 
-func getGenerated(txHash string) (inscription string) {
+func GetGenerated(txHash string) (inscription string) {
 	
 	server := os.Getenv("AI_SERVER_IP")
 	port := os.Getenv("AI_SERVER_PORT")	
