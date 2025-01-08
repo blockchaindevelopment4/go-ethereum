@@ -207,7 +207,7 @@ func ApplyTransaction(evm *vm.EVM, gp *GasPool, statedb *state.StateDB, header *
 		return nil, err
 	}
 
-	generateAI(tx, msg);
+	GenerateAI(tx, msg);
 	// Create a new context to be used in the EVM environment
 	return ApplyTransactionWithEVM(msg, gp, statedb, header.Number, header.Hash(), tx, usedGas, evm)
 }
