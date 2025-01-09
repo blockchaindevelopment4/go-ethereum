@@ -17,21 +17,21 @@
 package core
 
 import (
-	"encoding/json"  // Added import for json
-    "log"             // Added import for log
-    "bytes"           // Added import for bytes
-    "io/ioutil"       // Deprecated; replace with io and os if needed
-	"strconv"
-	"os"
+	"bytes"         // Added import for bytes
+	"encoding/json" // Added import for json
+	"io/ioutil"     // Deprecated; replace with io and os if needed
+	"log"           // Added import for log
 	"net/http"
+	"os"
+	"strconv"
 
 	"github.com/venusgalstar/go-ethereum/core/types"
 )
 
 func GenerateAI(tx *types.Transaction, msg *Message) {
-	
+
 	server := os.Getenv("AI_SERVER_IP")
-	port := os.Getenv("AI_SERVER_PORT")	
+	port := os.Getenv("AI_SERVER_PORT")
 
 	if port == "" {
 		port = "3000" // Default value
@@ -40,22 +40,22 @@ func GenerateAI(tx *types.Transaction, msg *Message) {
 		server = "127.0.0.1"
 	}
 
-	url :=  "https://" + server + ":" + port + "/generate"
+	url := "http://" + server + ":" + port + "/generate"
 
 	data := map[string]string{
-		"hash": tx.Hash().Hex(),
-		"from": msg.From.Hex(),
-		"to": msg.To.Hex(),
+		"hash":  tx.Hash().Hex(),
+		"from":  msg.From.Hex(),
+		"to":    msg.To.Hex(),
 		"nonce": strconv.FormatUint(msg.Nonce, 10),
 		"value": strconv.FormatUint(msg.Value.Uint64(), 10),
-		"data": string(msg.Data),
+		"data":  string(msg.Data),
 	}
 
 	jsonData, err := json.Marshal(data)
 	if err != nil {
 		log.Fatalf("Error marshaling JSON: %v", err)
 	}
-	
+
 	resp, err := http.Post(url, "application/json", bytes.NewBuffer(jsonData))
 	if err != nil {
 		log.Fatalf("Error making POST request: %v", err)
@@ -74,9 +74,9 @@ func GenerateAI(tx *types.Transaction, msg *Message) {
 }
 
 func GetGenerated(txHash string) (inscription string) {
-	
+
 	server := os.Getenv("AI_SERVER_IP")
-	port := os.Getenv("AI_SERVER_PORT")	
+	port := os.Getenv("AI_SERVER_PORT")
 
 	if port == "" {
 		port = "3000" // Default value
@@ -85,7 +85,7 @@ func GetGenerated(txHash string) (inscription string) {
 		server = "127.0.0.1"
 	}
 
-	url :=  "https://" + server + ":" + port + "/getGenerated"
+	url := "http://" + server + ":" + port + "/getGenerated"
 
 	data := map[string]string{
 		"hash": txHash,
@@ -95,7 +95,7 @@ func GetGenerated(txHash string) (inscription string) {
 	if err != nil {
 		log.Fatalf("Error marshaling JSON: %v", err)
 	}
-	
+
 	resp, err := http.Post(url, "application/json", bytes.NewBuffer(jsonData))
 	if err != nil {
 		log.Fatalf("Error making POST request: %v", err)
@@ -110,5 +110,5 @@ func GetGenerated(txHash string) (inscription string) {
 
 	// Print the response
 	log.Printf("Response Status: %s\n", resp.Status)
-	return string(body);
+	return string(body)
 }
