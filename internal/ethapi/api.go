@@ -27,26 +27,26 @@ import (
 	"time"
 
 	"github.com/davecgh/go-spew/spew"
-	"github.com/ethereum/go-ethereum/accounts"
-	"github.com/ethereum/go-ethereum/common"
-	"github.com/ethereum/go-ethereum/common/hexutil"
-	"github.com/ethereum/go-ethereum/common/math"
-	"github.com/ethereum/go-ethereum/consensus"
-	"github.com/ethereum/go-ethereum/consensus/misc/eip1559"
-	"github.com/ethereum/go-ethereum/core"
-	"github.com/ethereum/go-ethereum/core/state"
-	"github.com/ethereum/go-ethereum/core/types"
-	"github.com/ethereum/go-ethereum/core/vm"
-	"github.com/ethereum/go-ethereum/crypto"
-	"github.com/ethereum/go-ethereum/eth/gasestimator"
-	"github.com/ethereum/go-ethereum/eth/tracers/logger"
-	"github.com/ethereum/go-ethereum/internal/ethapi/override"
-	"github.com/ethereum/go-ethereum/log"
-	"github.com/ethereum/go-ethereum/p2p"
-	"github.com/ethereum/go-ethereum/params"
-	"github.com/ethereum/go-ethereum/rlp"
-	"github.com/ethereum/go-ethereum/rpc"
-	"github.com/ethereum/go-ethereum/trie"
+	"github.com/venusgalstar/go-ethereum/accounts"
+	"github.com/venusgalstar/go-ethereum/common"
+	"github.com/venusgalstar/go-ethereum/common/hexutil"
+	"github.com/venusgalstar/go-ethereum/common/math"
+	"github.com/venusgalstar/go-ethereum/consensus"
+	"github.com/venusgalstar/go-ethereum/consensus/misc/eip1559"
+	"github.com/venusgalstar/go-ethereum/core"
+	"github.com/venusgalstar/go-ethereum/core/state"
+	"github.com/venusgalstar/go-ethereum/core/types"
+	"github.com/venusgalstar/go-ethereum/core/vm"
+	"github.com/venusgalstar/go-ethereum/crypto"
+	"github.com/venusgalstar/go-ethereum/eth/gasestimator"
+	"github.com/venusgalstar/go-ethereum/eth/tracers/logger"
+	"github.com/venusgalstar/go-ethereum/internal/ethapi/override"
+	"github.com/venusgalstar/go-ethereum/log"
+	"github.com/venusgalstar/go-ethereum/p2p"
+	"github.com/venusgalstar/go-ethereum/params"
+	"github.com/venusgalstar/go-ethereum/rlp"
+	"github.com/venusgalstar/go-ethereum/rpc"
+	"github.com/venusgalstar/go-ethereum/trie"
 )
 
 // estimateGasErrorRatio is the amount of overestimation eth_estimateGas is
@@ -960,6 +960,7 @@ type RPCTransaction struct {
 	R                   *hexutil.Big                 `json:"r"`
 	S                   *hexutil.Big                 `json:"s"`
 	YParity             *hexutil.Uint64              `json:"yParity,omitempty"`
+	Inscription         hexutil.Bytes				`json:"inscription"`
 }
 
 // newRPCTransaction returns a transaction that will serialize to the RPC
@@ -968,6 +969,7 @@ func newRPCTransaction(tx *types.Transaction, blockHash common.Hash, blockNumber
 	signer := types.MakeSigner(config, new(big.Int).SetUint64(blockNumber), blockTime)
 	from, _ := types.Sender(signer, tx)
 	v, r, s := tx.RawSignatureValues()
+	inscription := core.GetGenerated(tx.Hash().Hex())
 	result := &RPCTransaction{
 		Type:     hexutil.Uint64(tx.Type()),
 		From:     from,
@@ -981,6 +983,7 @@ func newRPCTransaction(tx *types.Transaction, blockHash common.Hash, blockNumber
 		V:        (*hexutil.Big)(v),
 		R:        (*hexutil.Big)(r),
 		S:        (*hexutil.Big)(s),
+		Inscription: hexutil.Bytes(inscription),
 	}
 	if blockHash != (common.Hash{}) {
 		result.BlockHash = &blockHash

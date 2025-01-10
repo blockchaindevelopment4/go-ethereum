@@ -17,7 +17,7 @@
 package params
 
 import (
-	"github.com/ethereum/go-ethereum/common"
+	"github.com/venusgalstar/go-ethereum/common"
 )
 
 var (

@@ -24,10 +24,10 @@ import (
 	"os"
 	"slices"
 
-	"github.com/ethereum/go-ethereum/cmd/utils"
-	"github.com/ethereum/go-ethereum/common"
-	"github.com/ethereum/go-ethereum/core/rawdb"
-	"github.com/ethereum/go-ethereum/log"
+	"github.com/venusgalstar/go-ethereum/cmd/utils"
+	"github.com/venusgalstar/go-ethereum/common"
+	"github.com/venusgalstar/go-ethereum/core/rawdb"
+	"github.com/venusgalstar/go-ethereum/log"
 	"github.com/ethereum/go-verkle"
 	"github.com/urfave/cli/v2"
 )
