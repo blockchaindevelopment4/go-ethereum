@@ -26,13 +26,13 @@ import (
 	"testing"
 	"time"
 
-	"github.com/venusgalstar/go-ethereum/common"
-	"github.com/venusgalstar/go-ethereum/consensus/ethash"
-	"github.com/venusgalstar/go-ethereum/core"
-	"github.com/venusgalstar/go-ethereum/core/types"
-	"github.com/venusgalstar/go-ethereum/log"
-	"github.com/venusgalstar/go-ethereum/params"
-	"github.com/venusgalstar/go-ethereum/trie"
+	"github.com/ethereum/go-ethereum/common"
+	"github.com/ethereum/go-ethereum/consensus/ethash"
+	"github.com/ethereum/go-ethereum/core"
+	"github.com/ethereum/go-ethereum/core/types"
+	"github.com/ethereum/go-ethereum/log"
+	"github.com/ethereum/go-ethereum/params"
+	"github.com/ethereum/go-ethereum/trie"
 )
 
 // makeChain creates a chain of n blocks starting at and including parent.

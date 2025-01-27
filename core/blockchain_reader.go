@@ -20,17 +20,17 @@ import (
 	"errors"
 	"math/big"
 
-	"github.com/venusgalstar/go-ethereum/common"
-	"github.com/venusgalstar/go-ethereum/consensus"
-	"github.com/venusgalstar/go-ethereum/core/rawdb"
-	"github.com/venusgalstar/go-ethereum/core/state"
-	"github.com/venusgalstar/go-ethereum/core/state/snapshot"
-	"github.com/venusgalstar/go-ethereum/core/types"
-	"github.com/venusgalstar/go-ethereum/core/vm"
-	"github.com/venusgalstar/go-ethereum/event"
-	"github.com/venusgalstar/go-ethereum/params"
-	"github.com/venusgalstar/go-ethereum/rlp"
-	"github.com/venusgalstar/go-ethereum/triedb"
+	"github.com/ethereum/go-ethereum/common"
+	"github.com/ethereum/go-ethereum/consensus"
+	"github.com/ethereum/go-ethereum/core/rawdb"
+	"github.com/ethereum/go-ethereum/core/state"
+	"github.com/ethereum/go-ethereum/core/state/snapshot"
+	"github.com/ethereum/go-ethereum/core/types"
+	"github.com/ethereum/go-ethereum/core/vm"
+	"github.com/ethereum/go-ethereum/event"
+	"github.com/ethereum/go-ethereum/params"
+	"github.com/ethereum/go-ethereum/rlp"
+	"github.com/ethereum/go-ethereum/triedb"
 )
 
 // CurrentHeader retrieves the current head header of the canonical chain. The

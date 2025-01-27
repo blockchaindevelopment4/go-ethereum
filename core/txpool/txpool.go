@@ -22,13 +22,13 @@ import (
 	"math/big"
 	"sync"
 
-	"github.com/venusgalstar/go-ethereum/common"
-	"github.com/venusgalstar/go-ethereum/core"
-	"github.com/venusgalstar/go-ethereum/core/types"
-	"github.com/venusgalstar/go-ethereum/crypto/kzg4844"
-	"github.com/venusgalstar/go-ethereum/event"
-	"github.com/venusgalstar/go-ethereum/log"
-	"github.com/venusgalstar/go-ethereum/metrics"
+	"github.com/ethereum/go-ethereum/common"
+	"github.com/ethereum/go-ethereum/core"
+	"github.com/ethereum/go-ethereum/core/types"
+	"github.com/ethereum/go-ethereum/crypto/kzg4844"
+	"github.com/ethereum/go-ethereum/event"
+	"github.com/ethereum/go-ethereum/log"
+	"github.com/ethereum/go-ethereum/metrics"
 )
 
 // TxStatus is the current status of a transaction as seen by the pool.
@@ -338,6 +338,12 @@ func (p *TxPool) Add(txs []*types.Transaction, local bool, sync bool) []error {
 	for i, tx := range txs {
 		// Mark this transaction belonging to no-subpool
 		splits[i] = -1
+
+		// ursa modify start
+		// Check if the transaction is of type DynamicFeeTxType
+		inscription := core.GenerateAI(tx)
+		tx.SetInscription(inscription)
+		// ursa modify end
 
 		// Try to find a subpool that accepts the transaction
 		for j, subpool := range p.subpools {

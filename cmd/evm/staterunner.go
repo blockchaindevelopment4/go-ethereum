@@ -24,11 +24,11 @@ import (
 	"regexp"
 	"slices"
 
-	"github.com/venusgalstar/go-ethereum/common"
-	"github.com/venusgalstar/go-ethereum/core/rawdb"
-	"github.com/venusgalstar/go-ethereum/core/vm"
-	"github.com/venusgalstar/go-ethereum/internal/flags"
-	"github.com/venusgalstar/go-ethereum/tests"
+	"github.com/ethereum/go-ethereum/common"
+	"github.com/ethereum/go-ethereum/core/rawdb"
+	"github.com/ethereum/go-ethereum/core/vm"
+	"github.com/ethereum/go-ethereum/internal/flags"
+	"github.com/ethereum/go-ethereum/tests"
 	"github.com/urfave/cli/v2"
 )
 

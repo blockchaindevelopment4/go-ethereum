@@ -21,12 +21,12 @@ import (
 	"math/big"
 	"testing"
 
-	"github.com/venusgalstar/go-ethereum/common"
-	"github.com/venusgalstar/go-ethereum/core/types"
-	"github.com/venusgalstar/go-ethereum/ethdb"
-	"github.com/venusgalstar/go-ethereum/internal/blocktest"
-	"github.com/venusgalstar/go-ethereum/params"
-	"github.com/venusgalstar/go-ethereum/rlp"
+	"github.com/ethereum/go-ethereum/common"
+	"github.com/ethereum/go-ethereum/core/types"
+	"github.com/ethereum/go-ethereum/ethdb"
+	"github.com/ethereum/go-ethereum/internal/blocktest"
+	"github.com/ethereum/go-ethereum/params"
+	"github.com/ethereum/go-ethereum/rlp"
 )
 
 var newTestHasher = blocktest.NewHasher

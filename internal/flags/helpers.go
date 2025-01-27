@@ -23,8 +23,8 @@ import (
 	"sort"
 	"strings"
 
-	"github.com/venusgalstar/go-ethereum/internal/version"
-	"github.com/venusgalstar/go-ethereum/log"
+	"github.com/ethereum/go-ethereum/internal/version"
+	"github.com/ethereum/go-ethereum/log"
 	"github.com/mattn/go-isatty"
 	"github.com/urfave/cli/v2"
 )
@@ -40,7 +40,7 @@ func NewApp(usage string) *cli.App {
 	app.EnableBashCompletion = true
 	app.Version = version.WithCommit(git.Commit, git.Date)
 	app.Usage = usage
-	app.Copyright = "Copyright 2013-2024 The go-ethereum Authors"
+	app.Copyright = "Copyright 2013-2025 The go-ethereum Authors"
 	app.Before = func(ctx *cli.Context) error {
 		MigrateGlobalFlags(ctx)
 		return nil

@@ -19,7 +19,7 @@ package params
 import (
 	"math/big"
 
-	"github.com/venusgalstar/go-ethereum/common"
+	"github.com/ethereum/go-ethereum/common"
 )
 
 const (

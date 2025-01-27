@@ -20,7 +20,7 @@ import (
 	"fmt"
 	"math"
 
-	"github.com/venusgalstar/go-ethereum/rlp"
+	"github.com/ethereum/go-ethereum/rlp"
 	"github.com/golang/snappy"
 )
 

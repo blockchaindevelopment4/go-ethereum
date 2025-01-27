@@ -21,8 +21,8 @@ import (
 	"sync"
 	"time"
 
-	"github.com/venusgalstar/go-ethereum/common/mclock"
-	"github.com/venusgalstar/go-ethereum/log"
+	"github.com/ethereum/go-ethereum/common/mclock"
+	"github.com/ethereum/go-ethereum/log"
 )
 
 var (

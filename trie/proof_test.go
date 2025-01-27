@@ -25,10 +25,10 @@ import (
 	"slices"
 	"testing"
 
-	"github.com/venusgalstar/go-ethereum/common"
-	"github.com/venusgalstar/go-ethereum/core/rawdb"
-	"github.com/venusgalstar/go-ethereum/crypto"
-	"github.com/venusgalstar/go-ethereum/ethdb/memorydb"
+	"github.com/ethereum/go-ethereum/common"
+	"github.com/ethereum/go-ethereum/core/rawdb"
+	"github.com/ethereum/go-ethereum/crypto"
+	"github.com/ethereum/go-ethereum/ethdb/memorydb"
 )
 
 // Prng is a pseudo random number generator seeded by strong randomness.

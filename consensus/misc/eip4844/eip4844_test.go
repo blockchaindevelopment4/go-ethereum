@@ -21,7 +21,7 @@ import (
 	"math/big"
 	"testing"
 
-	"github.com/venusgalstar/go-ethereum/params"
+	"github.com/ethereum/go-ethereum/params"
 )
 
 func TestCalcExcessBlobGas(t *testing.T) {

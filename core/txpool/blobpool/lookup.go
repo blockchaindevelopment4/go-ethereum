@@ -17,7 +17,7 @@
 package blobpool
 
 import (
-	"github.com/venusgalstar/go-ethereum/common"
+	"github.com/ethereum/go-ethereum/common"
 )
 
 // lookup maps blob versioned hashes to transaction hashes that include them,

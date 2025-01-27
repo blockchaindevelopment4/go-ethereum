@@ -17,11 +17,12 @@
 package p2p
 
 import (
+	"cmp"
 	"fmt"
 	"strings"
 
-	"github.com/venusgalstar/go-ethereum/p2p/enode"
-	"github.com/venusgalstar/go-ethereum/p2p/enr"
+	"github.com/ethereum/go-ethereum/p2p/enode"
+	"github.com/ethereum/go-ethereum/p2p/enr"
 )
 
 // Protocol represents a P2P subprotocol implementation.
@@ -81,13 +82,7 @@ func (cap Cap) String() string {
 // Cmp defines the canonical sorting order of capabilities.
 func (cap Cap) Cmp(other Cap) int {
 	if cap.Name == other.Name {
-		if cap.Version < other.Version {
-			return -1
-		}
-		if cap.Version > other.Version {
-			return 1
-		}
-		return 0
+		return cmp.Compare(cap.Version, other.Version)
 	}
 	return strings.Compare(cap.Name, other.Name)
 }
