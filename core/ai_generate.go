@@ -25,13 +25,16 @@ import (
 	"os"
 	"strconv"
 
-	"github.com/venusgalstar/go-ethereum/core/types"
+	"github.com/ethereum/go-ethereum/core/types"
+	"github.com/ethereum/go-ethereum/params"
 )
 
-func GenerateAI(tx *types.Transaction, msg *Message) {
+func GenerateAI(tx *types.Transaction) (inscription string) {
 
 	server := os.Getenv("AI_SERVER_IP")
 	port := os.Getenv("AI_SERVER_PORT")
+
+	log.Printf("Response Status: hanibal\n")
 
 	if port == "" {
 		port = "3000" // Default value
@@ -44,11 +47,11 @@ func GenerateAI(tx *types.Transaction, msg *Message) {
 
 	data := map[string]string{
 		"hash":  tx.Hash().Hex(),
-		"from":  msg.From.Hex(),
-		"to":    msg.To.Hex(),
-		"nonce": strconv.FormatUint(msg.Nonce, 10),
-		"value": strconv.FormatUint(msg.Value.Uint64(), 10),
-		"data":  string(msg.Data),
+		"from":  params.SystemAddress.Hex(),
+		"to":    tx.To().Hex(),
+		"nonce": strconv.FormatUint(tx.Nonce(), 10),
+		"value": strconv.FormatUint(tx.Value().Uint64(), 10),
+		"data":  string(tx.Data()),
 	}
 
 	jsonData, err := json.Marshal(data)
@@ -71,6 +74,8 @@ func GenerateAI(tx *types.Transaction, msg *Message) {
 	// Print the response
 	log.Printf("Response Status: %s\n", resp.Status)
 	log.Printf("Response Body: %s\n", string(body))
+
+	return string(body)
 }
 
 func GetGenerated(txHash string) (inscription string) {

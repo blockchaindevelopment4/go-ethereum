@@ -19,7 +19,7 @@ package vm
 import (
 	"fmt"
 
-	"github.com/venusgalstar/go-ethereum/params"
+	"github.com/ethereum/go-ethereum/params"
 )
 
 func validateControlFlow(code []byte, section int, metadata []*functionMetadata, jt *JumpTable) (int, error) {

@@ -21,7 +21,7 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/venusgalstar/go-ethereum/rpc"
+	"github.com/ethereum/go-ethereum/rpc"
 	"github.com/golang-jwt/jwt/v4"
 )
 

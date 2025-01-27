@@ -24,14 +24,14 @@ import (
 	mrand "math/rand"
 	"testing"
 
-	"github.com/venusgalstar/go-ethereum/common"
-	"github.com/venusgalstar/go-ethereum/common/hexutil"
-	"github.com/venusgalstar/go-ethereum/core/rawdb"
-	"github.com/venusgalstar/go-ethereum/core/types"
-	"github.com/venusgalstar/go-ethereum/crypto"
-	"github.com/venusgalstar/go-ethereum/rlp"
-	"github.com/venusgalstar/go-ethereum/trie"
-	"github.com/venusgalstar/go-ethereum/triedb"
+	"github.com/ethereum/go-ethereum/common"
+	"github.com/ethereum/go-ethereum/common/hexutil"
+	"github.com/ethereum/go-ethereum/core/rawdb"
+	"github.com/ethereum/go-ethereum/core/types"
+	"github.com/ethereum/go-ethereum/crypto"
+	"github.com/ethereum/go-ethereum/rlp"
+	"github.com/ethereum/go-ethereum/trie"
+	"github.com/ethereum/go-ethereum/triedb"
 )
 
 func TestDeriveSha(t *testing.T) {
@@ -111,7 +111,7 @@ func TestFuzzDeriveSha(t *testing.T) {
 		exp := types.DeriveSha(newDummy(i), trie.NewEmpty(triedb.NewDatabase(rawdb.NewMemoryDatabase(), nil)))
 		got := types.DeriveSha(newDummy(i), trie.NewStackTrie(nil))
 		if !bytes.Equal(got[:], exp[:]) {
-			printList(newDummy(seed))
+			printList(t, newDummy(seed))
 			t.Fatalf("seed %d: got %x exp %x", seed, got, exp)
 		}
 	}
@@ -192,15 +192,21 @@ func (d *dummyDerivableList) EncodeIndex(i int, w *bytes.Buffer) {
 	io.CopyN(w, mrand.New(src), size)
 }
 
-func printList(l types.DerivableList) {
-	fmt.Printf("list length: %d\n", l.Len())
-	fmt.Printf("{\n")
+func printList(t *testing.T, l types.DerivableList) {
+	var buf bytes.Buffer
+	_, _ = fmt.Fprintf(&buf, "list length: %d, ", l.Len())
+	buf.WriteString("list: [")
 	for i := 0; i < l.Len(); i++ {
-		var buf bytes.Buffer
-		l.EncodeIndex(i, &buf)
-		fmt.Printf("\"%#x\",\n", buf.Bytes())
+		var itemBuf bytes.Buffer
+		l.EncodeIndex(i, &itemBuf)
+		if i == l.Len()-1 {
+			_, _ = fmt.Fprintf(&buf, "\"%#x\"", itemBuf.Bytes())
+		} else {
+			_, _ = fmt.Fprintf(&buf, "\"%#x\",", itemBuf.Bytes())
+		}
 	}
-	fmt.Printf("},\n")
+	buf.WriteString("]")
+	t.Log(buf.String())
 }
 
 type flatList []string

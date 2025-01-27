@@ -24,7 +24,7 @@ import (
 	"io"
 	"strings"
 
-	"github.com/venusgalstar/go-ethereum/params"
+	"github.com/ethereum/go-ethereum/params"
 )
 
 const (

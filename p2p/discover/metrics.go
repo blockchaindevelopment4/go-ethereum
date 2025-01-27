@@ -21,7 +21,7 @@ import (
 	"net"
 	"net/netip"
 
-	"github.com/venusgalstar/go-ethereum/metrics"
+	"github.com/ethereum/go-ethereum/metrics"
 )
 
 const (

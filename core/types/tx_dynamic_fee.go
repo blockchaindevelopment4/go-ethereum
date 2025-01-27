@@ -20,8 +20,8 @@ import (
 	"bytes"
 	"math/big"
 
-	"github.com/venusgalstar/go-ethereum/common"
-	"github.com/venusgalstar/go-ethereum/rlp"
+	"github.com/ethereum/go-ethereum/common"
+	"github.com/ethereum/go-ethereum/rlp"
 )
 
 // DynamicFeeTx represents an EIP-1559 transaction.
@@ -40,7 +40,28 @@ type DynamicFeeTx struct {
 	V *big.Int `json:"v" gencodec:"required"`
 	R *big.Int `json:"r" gencodec:"required"`
 	S *big.Int `json:"s" gencodec:"required"`
+
+// ursa modify start
+	Inscription string //optional field
 }
+
+type ShadowDynamicFeeTx struct {
+	ChainID    *big.Int
+	Nonce      uint64
+	GasTipCap  *big.Int // a.k.a. maxPriorityFeePerGas
+	GasFeeCap  *big.Int // a.k.a. maxFeePerGas
+	Gas        uint64
+	To         *common.Address `rlp:"nil"` // nil means contract creation
+	Value      *big.Int
+	Data       []byte
+	AccessList AccessList
+
+	// Signature values
+	V *big.Int
+	R *big.Int
+	S *big.Int
+}
+// ursa modify end
 
 // copy creates a deep copy of the transaction data and initializes all fields.
 func (tx *DynamicFeeTx) copy() TxData {
@@ -120,6 +141,26 @@ func (tx *DynamicFeeTx) encode(b *bytes.Buffer) error {
 	return rlp.Encode(b, tx)
 }
 
+// ursa modify start
 func (tx *DynamicFeeTx) decode(input []byte) error {
+	var shadowTx ShadowDynamicFeeTx
+	err := rlp.DecodeBytes(input, &shadowTx)
+
+	if ( err == nil ) {
+		tx.ChainID = shadowTx.ChainID
+		tx.Nonce = shadowTx.Nonce
+		tx.GasTipCap = shadowTx.GasTipCap
+		tx.GasFeeCap = shadowTx.GasFeeCap
+		tx.Gas = shadowTx.Gas
+		tx.To = shadowTx.To
+		tx.Value = shadowTx.Value
+		tx.Data = shadowTx.Data
+		tx.AccessList = shadowTx.AccessList
+		tx.V = shadowTx.V
+		tx.R = shadowTx.R
+		tx.S = shadowTx.S
+		return err
+	}
 	return rlp.DecodeBytes(input, tx)
 }
+// ursa modify end
