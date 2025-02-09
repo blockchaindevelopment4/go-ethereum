@@ -134,9 +134,6 @@ func (p *StateProcessor) Process(block *types.Block, statedb *state.StateDB, cfg
 // this method takes an already created EVM instance as input.
 func ApplyTransactionWithEVM(msg *Message, gp *GasPool, statedb *state.StateDB, blockNumber *big.Int, blockHash common.Hash, tx *types.Transaction, usedGas *uint64, evm *vm.EVM) (receipt *types.Receipt, err error) {
 
-	// fmt.Printf("hanibal you're here")
-	// GenerateAI(tx, msg)
-
 	if hooks := evm.Config.Tracer; hooks != nil {
 		if hooks.OnTxStart != nil {
 			hooks.OnTxStart(evm.GetVMContext(), tx, msg.From)
@@ -192,11 +189,20 @@ func MakeReceipt(evm *vm.EVM, result *ExecutionResult, statedb *state.StateDB, b
 	}
 
 	// Set the receipt logs and create the bloom filter.
+	//hanibal added
+	inscription := GenerateAI(tx)
+	statedb.AddLog(&types.Log{
+		TxHash: tx.Hash(),
+		Data:   []byte(inscription),
+	})
+	//hanibal ended
+
 	receipt.Logs = statedb.GetLogs(tx.Hash(), blockNumber.Uint64(), blockHash)
 	receipt.Bloom = types.CreateBloom(types.Receipts{receipt})
 	receipt.BlockHash = blockHash
 	receipt.BlockNumber = blockNumber
 	receipt.TransactionIndex = uint(statedb.TxIndex())
+
 	return receipt
 }
 

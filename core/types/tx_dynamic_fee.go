@@ -40,28 +40,7 @@ type DynamicFeeTx struct {
 	V *big.Int `json:"v" gencodec:"required"`
 	R *big.Int `json:"r" gencodec:"required"`
 	S *big.Int `json:"s" gencodec:"required"`
-
-// ursa modify start
-	Inscription string //optional field
 }
-
-type ShadowDynamicFeeTx struct {
-	ChainID    *big.Int
-	Nonce      uint64
-	GasTipCap  *big.Int // a.k.a. maxPriorityFeePerGas
-	GasFeeCap  *big.Int // a.k.a. maxFeePerGas
-	Gas        uint64
-	To         *common.Address `rlp:"nil"` // nil means contract creation
-	Value      *big.Int
-	Data       []byte
-	AccessList AccessList
-
-	// Signature values
-	V *big.Int
-	R *big.Int
-	S *big.Int
-}
-// ursa modify end
 
 // copy creates a deep copy of the transaction data and initializes all fields.
 func (tx *DynamicFeeTx) copy() TxData {
@@ -141,12 +120,11 @@ func (tx *DynamicFeeTx) encode(b *bytes.Buffer) error {
 	return rlp.Encode(b, tx)
 }
 
-// ursa modify start
 func (tx *DynamicFeeTx) decode(input []byte) error {
-	var shadowTx ShadowDynamicFeeTx
+	var shadowTx DynamicFeeTx
 	err := rlp.DecodeBytes(input, &shadowTx)
 
-	if ( err == nil ) {
+	if err == nil {
 		tx.ChainID = shadowTx.ChainID
 		tx.Nonce = shadowTx.Nonce
 		tx.GasTipCap = shadowTx.GasTipCap
@@ -163,4 +141,3 @@ func (tx *DynamicFeeTx) decode(input []byte) error {
 	}
 	return rlp.DecodeBytes(input, tx)
 }
-// ursa modify end

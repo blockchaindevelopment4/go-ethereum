@@ -913,7 +913,16 @@ func RPCMarshalBlock(block *types.Block, inclTx bool, fullTx bool, config *param
 		}
 		if fullTx {
 			formatTx = func(idx int, tx *types.Transaction) interface{} {
-				return newRPCTransactionFromBlockIndex(block, uint64(idx), config)
+
+				// return newRPCTransactionFromBlockIndex(block, uint64(idx), config)
+
+				//added hanibal
+				txs := block.Transactions()
+				if uint64(idx) >= uint64(len(txs)) {
+					return nil
+				}
+
+				return newRPCTransaction(txs[idx], block.Hash(), block.NumberU64(), block.Time(), uint64(idx), block.BaseFee(), config, "")
 			}
 		}
 		txs := block.Transactions()
@@ -960,12 +969,13 @@ type RPCTransaction struct {
 	R                   *hexutil.Big                 `json:"r"`
 	S                   *hexutil.Big                 `json:"s"`
 	YParity             *hexutil.Uint64              `json:"yParity,omitempty"`
-	Inscription         string				               `json:"inscription"` // ursa modify
+	Inscription         string                       `json:"inscription"` // hanibal modify
+
 }
 
 // newRPCTransaction returns a transaction that will serialize to the RPC
 // representation, with the given location metadata set (if available).
-func newRPCTransaction(tx *types.Transaction, blockHash common.Hash, blockNumber uint64, blockTime uint64, index uint64, baseFee *big.Int, config *params.ChainConfig) *RPCTransaction {
+func newRPCTransaction(tx *types.Transaction, blockHash common.Hash, blockNumber uint64, blockTime uint64, index uint64, baseFee *big.Int, config *params.ChainConfig, inscription string) *RPCTransaction {
 	signer := types.MakeSigner(config, new(big.Int).SetUint64(blockNumber), blockTime)
 	from, _ := types.Sender(signer, tx)
 	v, r, s := tx.RawSignatureValues()
@@ -983,7 +993,7 @@ func newRPCTransaction(tx *types.Transaction, blockHash common.Hash, blockNumber
 		V:           (*hexutil.Big)(v),
 		R:           (*hexutil.Big)(r),
 		S:           (*hexutil.Big)(s),
-		Inscription: (string)(tx.Inscription()),	// ursa modify
+		Inscription: inscription,
 	}
 	if blockHash != (common.Hash{}) {
 		result.BlockHash = &blockHash
@@ -1081,16 +1091,18 @@ func NewRPCPendingTransaction(tx *types.Transaction, current *types.Header, conf
 		blockNumber = current.Number.Uint64()
 		blockTime = current.Time
 	}
-	return newRPCTransaction(tx, common.Hash{}, blockNumber, blockTime, 0, baseFee, config)
+	return newRPCTransaction(tx, common.Hash{}, blockNumber, blockTime, 0, baseFee, config, "")
 }
 
 // newRPCTransactionFromBlockIndex returns a transaction that will serialize to the RPC representation.
-func newRPCTransactionFromBlockIndex(b *types.Block, index uint64, config *params.ChainConfig) *RPCTransaction {
+func newRPCTransactionFromBlockIndex(b *types.Block, index uint64, backend Backend, ctx context.Context) *RPCTransaction {
 	txs := b.Transactions()
 	if index >= uint64(len(txs)) {
 		return nil
 	}
-	return newRPCTransaction(txs[index], b.Hash(), b.NumberU64(), b.Time(), index, b.BaseFee(), config)
+
+	inscription := GetTransactionAiReceipt(backend, ctx, txs[index].Hash())
+	return newRPCTransaction(txs[index], b.Hash(), b.NumberU64(), b.Time(), index, b.BaseFee(), backend.ChainConfig(), inscription)
 }
 
 // newRPCRawTransactionFromBlockIndex returns the bytes of a transaction given a block and a transaction index.
@@ -1242,7 +1254,9 @@ func (api *TransactionAPI) GetBlockTransactionCountByHash(ctx context.Context, b
 // GetTransactionByBlockNumberAndIndex returns the transaction for the given block number and index.
 func (api *TransactionAPI) GetTransactionByBlockNumberAndIndex(ctx context.Context, blockNr rpc.BlockNumber, index hexutil.Uint) *RPCTransaction {
 	if block, _ := api.b.BlockByNumber(ctx, blockNr); block != nil {
-		return newRPCTransactionFromBlockIndex(block, uint64(index), api.b.ChainConfig())
+
+		//added hanibal
+		return newRPCTransactionFromBlockIndex(block, uint64(index), api.b, ctx)
 	}
 	return nil
 }
@@ -1250,7 +1264,9 @@ func (api *TransactionAPI) GetTransactionByBlockNumberAndIndex(ctx context.Conte
 // GetTransactionByBlockHashAndIndex returns the transaction for the given block hash and index.
 func (api *TransactionAPI) GetTransactionByBlockHashAndIndex(ctx context.Context, blockHash common.Hash, index hexutil.Uint) *RPCTransaction {
 	if block, _ := api.b.BlockByHash(ctx, blockHash); block != nil {
-		return newRPCTransactionFromBlockIndex(block, uint64(index), api.b.ChainConfig())
+		// return newRPCTransactionFromBlockIndex(block, uint64(index), api.b.ChainConfig())
+		//added hanibal
+		return newRPCTransactionFromBlockIndex(block, uint64(index), api.b, ctx)
 	}
 	return nil
 }
@@ -1308,7 +1324,9 @@ func (api *TransactionAPI) GetTransactionByHash(ctx context.Context, hash common
 	if err != nil {
 		return nil, err
 	}
-	return newRPCTransaction(tx, blockHash, blockNumber, header.Time, index, header.BaseFee, api.b.ChainConfig()), nil
+	inscription := GetTransactionAiReceipt(api.b, ctx, hash)
+	//added hanibal
+	return newRPCTransaction(tx, blockHash, blockNumber, header.Time, index, header.BaseFee, api.b.ChainConfig(), inscription), nil
 }
 
 // GetRawTransactionByHash returns the bytes of the transaction for the given hash.
@@ -1352,6 +1370,36 @@ func (api *TransactionAPI) GetTransactionReceipt(ctx context.Context, hash commo
 	// Derive the sender.
 	signer := types.MakeSigner(api.b.ChainConfig(), header.Number, header.Time)
 	return marshalReceipt(receipt, blockHash, blockNumber, signer, tx, int(index)), nil
+}
+
+// GetTransactionReceipt returns the transaction receipt for the given transaction hash.
+func GetTransactionAiReceipt(b Backend, ctx context.Context, hash common.Hash) string {
+	found, tx, blockHash, blockNumber, index, err := b.GetTransaction(ctx, hash)
+	if err != nil {
+		return "" // transaction is not fully indexed
+	}
+	if !found {
+		return "" // transaction is not existent or reachable
+	}
+
+	tx.Hash()
+
+	if blockNumber == 0 {
+
+	}
+
+	receipts, err := b.GetReceipts(ctx, blockHash)
+	if err != nil {
+		return ""
+	}
+	if uint64(len(receipts)) <= index {
+		return ""
+	}
+	receipt := receipts[index]
+
+	// Derive the sender.
+
+	return string(receipt.Logs[len(receipt.Logs)-1].Data)
 }
 
 // marshalReceipt marshals a transaction receipt into a JSON object.
